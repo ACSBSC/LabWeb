@@ -21,3 +21,17 @@ exports.find = (id) => {
     .first();
 
 }
+
+exports.update = (taskId, updateTask) => {
+  return knex('tasks')
+    .update(updateTask)
+    .update('updated_at', knex.fn.now())
+    .where('id', taskId);
+}
+
+exports.delete = (task) => {
+  console.log("task id desu: ",task.id);
+  return knex('tasks')
+    .delete()
+    .where('id', task.id);
+}

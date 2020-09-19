@@ -26,6 +26,10 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(express.json());
 
+
+// sobreescribir método de envío y post
+let override = require('method-override')
+app.use(override('_method'))
 // Routes
 app.use('/', webRoutes);
 

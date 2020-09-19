@@ -50,3 +50,75 @@ function addTask(task) {
   let node = document.createRange().createContextualFragment(html);
   document.getElementById('tasksList').prepend(node);
 }
+
+function doneTask(taskId) {
+
+  console.log("taskId");
+  console.log(taskId);
+
+  let body = {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: taskId })
+  };
+  fetch('/done', body)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw "Error en la llamada Ajax a done";
+      }
+    })
+    .then(task => {
+      let html =
+      `
+      <div id="${task.id}" class="card my-3 bg-warning">
+      <div class="card-body">
+        <p class="card-text">${task.description}</p>
+        <a href="javascript:;"  onclick="deleteTask(${task.id});"  class="card-link">Delete</a>
+      </div>
+      </div>
+      `;
+      console.log("html new");
+      console.log(html);
+      document.getElementById(taskId).innerHTML = html;
+    })
+    .catch(error => {
+      console.log('Error: ', error);
+    })
+}
+
+
+function deleteTask(taskId) {
+
+  console.log("taskId");
+  console.log(taskId);
+
+  let body = {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: taskId })
+  };
+  fetch('/delete', body)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw "Error en la llamada Ajax a done";
+      }
+    })
+    .then(task => {
+      console.log(taskId);
+      var div = document.getElementById(taskId);
+      div.parentNode.removeChild(div);
+    })
+    .catch(error => {
+      console.log('Error: ', error);
+    })
+}

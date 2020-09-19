@@ -23,15 +23,17 @@
   <div class="row">
     <div class="col-lg-12" id="tasksList">
       {{#each tasks}}
-      <div class="card my-3 {{#eq status 'done' }}bg-light{{/eq}}">
+      <div id="{{id}}"  class="card my-3 {{#eq status 'done' }}bg-warning{{/eq}}">
         <div class="card-body">
           <p class="card-text">{{ description }}</p>
           {{#eq status 'pending'}}
-            <a href="#" class="card-link">Done</a>
+           <a href="javascript:;"  onclick="doneTask({{id}});"  class="card-link">Done</a>
           {{/eq}}
+          <a href="javascript:;"  onclick="deleteTask({{id}});"  class="card-link">Delete</a>
         </div>
       </div>
       {{/each}}
     </div>
   </div>
 </main>
+
